@@ -1,0 +1,24 @@
+[ui]
+ [ui.assent]
+ dir = "assent"
+ fxml = "main_window.fxml"
+
+[context]
+output = "output"
+cache = "cache"
+concurrent_call_number = 5
+call_timeout = 30
+call_timeout_unit = "second"
+image_queue_size = 200
+
+ [context.event_loop]
+ size = 2
+ blocked_check_interval = 1
+ blocked_check_interval_unit = "second"
+
+ [context.baidu_ai]
+ api_key = "******"
+ secret_key = "******"
+ auto_refresh_token = true
+ refresh_token_interval = 2
+ refresh_token_interval_unit = "day"

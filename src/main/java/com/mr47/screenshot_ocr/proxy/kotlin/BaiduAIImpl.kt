@@ -50,7 +50,7 @@ class BaiduAIImpl(private val webClient: WebClient): BaiduAI {
         map.add("image", base64)
         val jsonObject = awaitResult<HttpResponse<Buffer>> { h -> request.sendForm(map, h) }
                 .bodyAsJsonObject()
-        return when {
+        when {
             jsonObject.containsKey("words_result") -> {
                 val list = ArrayList<String>(jsonObject.getInteger("words_result_num")!!)
                 val wordsResult = jsonObject.getJsonArray("words_result")!!
