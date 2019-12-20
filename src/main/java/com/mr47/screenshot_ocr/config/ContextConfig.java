@@ -6,15 +6,21 @@ import java.util.concurrent.TimeUnit;
 
 public class ContextConfig implements TomlConfig {
     private String cacheDir;
+    private String outputDir;
+    private int concurrentCallNumber;
     private int callTimeOut;
     private TimeUnit callTimeOutUnit;
+    private int imageQueueSize;
     private EventLoop eventLoop;
     private BaiduAI baiduAI;
 
     public ContextConfig() {
+        outputDir = "output";
         cacheDir = "cache";
+        concurrentCallNumber = 5;
         callTimeOut = 60000;
         callTimeOutUnit = TimeUnit.MILLISECONDS;
+        imageQueueSize = 200;
         eventLoop = new EventLoop();
         baiduAI = new BaiduAI();
     }
@@ -22,8 +28,15 @@ public class ContextConfig implements TomlConfig {
     @SuppressWarnings("unchecked")
     @Override
     public ContextConfig mergeFromToml(Toml toml) {
+        if(toml.contains("output"))
+            outputDir = toml.getString("output");
+
         if(toml.contains("cache"))
             cacheDir = toml.getString("cache");
+
+        if(toml.contains("concurrent_call_number"))
+            concurrentCallNumber = toml.getLong("concurrent_call_number")
+                    .intValue();
 
         if(toml.contains("call_timeout"))
             callTimeOut = toml.getLong("call_timeout")
@@ -37,6 +50,10 @@ public class ContextConfig implements TomlConfig {
                 default: throw new IllegalArgumentException("Unknown Time Unit Type: "
                         + toml.getString("call_timeout_unit"));
             }
+
+        if(toml.contains("image_queue_size"))
+            imageQueueSize = toml.getLong("image_queue_size")
+                    .intValue();
 
         if(toml.containsTable("event_loop"))
             eventLoop.mergeFromToml(toml.getTable("event_loop"));
@@ -55,8 +72,16 @@ public class ContextConfig implements TomlConfig {
         return baiduAI;
     }
 
+    public String outputDir() {
+        return outputDir;
+    }
+
     public String cacheDir() {
         return cacheDir;
+    }
+
+    public int concurrentCallNumber() {
+        return concurrentCallNumber;
     }
 
     public int callTimeOut() {
@@ -65,6 +90,10 @@ public class ContextConfig implements TomlConfig {
 
     public TimeUnit callTimeOutUnit() {
         return callTimeOutUnit;
+    }
+
+    public int imageQueueSize() {
+        return imageQueueSize;
     }
 
     public static class EventLoop implements TomlConfig {
@@ -121,8 +150,8 @@ public class ContextConfig implements TomlConfig {
         private TimeUnit refreshTokenIntervalUnit;
 
         private BaiduAI() {
-            apiKey = "*****";
-            secretKey = "*****";
+            apiKey = "j7kaw8MLF7XVXVtiUkWm7la7";
+            secretKey = "suIqlxnG5V5DQmcqxuduPzLjDsjrbRxM";
             autoRefreshToken = true;
             refreshTokenInterval = 2L;
             refreshTokenIntervalUnit = TimeUnit.DAYS;
