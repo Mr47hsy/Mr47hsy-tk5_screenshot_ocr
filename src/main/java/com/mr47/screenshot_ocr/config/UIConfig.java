@@ -36,7 +36,7 @@ public class UIConfig implements TomlConfig {
 
         private Assent() {
             dir = "assent";
-            fxmlFileName = "main_window.fxml";
+            fxmlFileName = "assent/main_window.fxml";
         }
 
         @SuppressWarnings("unchecked")

@@ -2,8 +2,8 @@ package com.mr47.screenshot_ocr.proxy.kotlin
 
 import com.mr47.screenshot_ocr.controller.Context
 import com.mr47.screenshot_ocr.proxy.BaiduAIException
-import io.vertx.core.MultiMap
 import io.vertx.core.buffer.Buffer
+import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.client.HttpResponse
 import io.vertx.ext.web.client.WebClient
 import io.vertx.kotlin.coroutines.awaitResult
@@ -42,21 +42,21 @@ class BaiduAIImpl(private val webClient: WebClient): BaiduAI {
     }
 
     private suspend fun ocr(token: String, image: Buffer, url: String): List<String> {
-        if(image.bytes.size > 2097152) throw BaiduAIException(0, "The image size is over 2M", "图片大小超过2M,识别失败")
+        if(image.bytes.size > 2097152) throw Exception("图片大小超过2M,识别失败")
         val base64 = Base64.getEncoder().encodeToString(image.bytes)
+
         val request = webClient.postAbs(url)
+                .putHeader("Content-Type", "application/x-www-form-urlencoded")
                 .addQueryParam("access_token", token)
-        val map = MultiMap.caseInsensitiveMultiMap()
-        map.add("image", base64)
-        val jsonObject = awaitResult<HttpResponse<Buffer>> { h -> request.sendForm(map, h) }
+        val body = JsonObject().put("image", base64)
+        val jsonObject = awaitResult<HttpResponse<Buffer>> { h -> request.sendBuffer(body.toBuffer(), h) }
                 .bodyAsJsonObject()
         return when {
             jsonObject.containsKey("words_result") -> {
                 val list = ArrayList<String>(jsonObject.getInteger("words_result_num")!!)
                 val wordsResult = jsonObject.getJsonArray("words_result")!!
                 for (i in wordsResult.list.indices) {
-                    val words = wordsResult.getJsonObject(i)!!
-                            .getString("words")!!
+                    val words = wordsResult.getString(i)!!
                     list.add(words)
                 }
                 return list

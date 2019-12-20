@@ -29,5 +29,3 @@ hs_err_pid*
 target/
 
 out/
-
-*.cache

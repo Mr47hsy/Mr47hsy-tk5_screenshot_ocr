@@ -1,17 +1,14 @@
 package com.mr47.screenshot_ocr.ui;
 
-import com.mr47.screenshot_ocr.config.AppConfig;
 import com.mr47.screenshot_ocr.config.UIConfig;
-import com.mr47.screenshot_ocr.controller.Context;
 import com.mr47.screenshot_ocr.ui.kotlin.MainWindow;
 import javafx.application.Application;
 
 public abstract class UI extends Application {
     private static UIConfig UI_CONFIG = null;
 
-    public static void launch(AppConfig appConfig) {
-        UI_CONFIG = appConfig.uiConfig();
-        Context.prepare(appConfig.contextConfig());
+    public static void launch(UIConfig uiConfig) {
+        UI_CONFIG = uiConfig;
         Application.launch(MainWindow.class, UI_CONFIG.args());
     }
 
