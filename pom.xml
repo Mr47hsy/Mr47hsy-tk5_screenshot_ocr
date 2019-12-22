@@ -59,7 +59,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.dimao.writeoff.App</mainClass>
+                            <mainClass>com.mr47.screenshot_ocr.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -86,25 +86,25 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
-            <version>3.8.0</version>
+            <version>3.8.4</version>
         </dependency>
         <!-- Vertx Web Client -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-client</artifactId>
-            <version>3.8.0</version>
+            <version>3.8.4</version>
         </dependency>
         <!-- Vertx Coroutines -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-lang-kotlin-coroutines</artifactId>
-            <version>3.8.0</version>
+            <version>3.8.4</version>
         </dependency>
         <!-- Vertx Mock Unit Test Need -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
-            <version>3.8.0</version>
+            <version>3.8.4</version>
             <classifier>processor</classifier>
             <scope>provided</scope>
         </dependency>

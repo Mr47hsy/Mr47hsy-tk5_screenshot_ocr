@@ -1,13 +1,7 @@
 package com.mr47.screenshot_ocr.controller;
 
-import com.mr47.screenshot_ocr.config.ContextConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class ContextTest {

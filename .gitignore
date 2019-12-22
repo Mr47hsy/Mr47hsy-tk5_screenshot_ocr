@@ -31,3 +31,5 @@ target/
 out/
 
 *.cache
+
+exe/
